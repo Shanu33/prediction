@@ -1,0 +1,7 @@
+ARTIFACTS_DIR = "artifacts"
+
+SYMBOL = "TSLA"  
+START_DATE = "2018-01-01"
+END_DATE = "2023-01-01"
+
+TEST_SIZE = 0.2
