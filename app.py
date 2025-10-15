@@ -12,7 +12,7 @@ from data import create_features
 from evaluate import evaluate_model
 from forecast import forecast_future
 
-st.title("📈 Stock Prediction & Forecasting Demo")
+st.title("Stock Prediction & Forecasting Demo")
 
 # --- User Inputs ---
 symbol = st.text_input("Enter stock symbol", "AAPL")
@@ -38,7 +38,7 @@ def load_stock_data(symbol, start, end, interval):
         max_days = 730
         if (end - start).days > max_days:
             start = end - timedelta(days=max_days)
-            st.warning("⚠️ Hourly data is limited to the last 2 years. Adjusted date range automatically.")
+            st.warning("Hourly data is limited to the last 2 years. Adjusted date range automatically.")
 
     df = yf.download(symbol, start=start, end=end, interval=interval)
 
@@ -62,7 +62,7 @@ def load_stock_data(symbol, start, end, interval):
 df = load_stock_data(symbol, start_date, end_date, interval)
 
 if df.empty or len(df) < 100:
-    st.error("⚠️ Not enough stock data fetched! Try changing the date range or use 'Daily' interval.")
+    st.error("Not enough stock data fetched! Try changing the date range or use 'Daily' interval.")
     st.stop()
 
 # --- Feature Engineering ---
@@ -82,7 +82,7 @@ mlp.fit(X_scaled, y)
 preds_gb, rmse_gb, mape_gb = evaluate_model(gb, X_scaled, y)
 preds_mlp, rmse_mlp, mape_mlp = evaluate_model(mlp, X_scaled, y)
 
-st.subheader("📊 Model Performance")
+st.subheader("Model Performance")
 st.write(f"**GB** → RMSE: {rmse_gb:.2f}, MAPE: {mape_gb:.2%}")
 st.write(f"**MLP** → RMSE: {rmse_mlp:.2f}, MAPE: {mape_mlp:.2%}")
 
@@ -133,7 +133,7 @@ elif mode == "Future Forecast":
             line=dict(color='orange'),
             hovertemplate='Date: %{x}<br>GB Forecast: $%{y:.2f}<extra></extra>'
         ))
-        st.write("📌 GB Future Forecast:", pd.DataFrame({"Date": future_index, "Price (USD)": future_preds_gb}))
+        st.write("GB Future Forecast:", pd.DataFrame({"Date": future_index, "Price (USD)": future_preds_gb}))
 
     if "MLP" in selected_models:
         future_preds_mlp = forecast_future(mlp, scaler, df, steps=steps_ahead)
@@ -145,11 +145,11 @@ elif mode == "Future Forecast":
             line=dict(color='green'),
             hovertemplate='Date: %{x}<br>MLP Forecast: $%{y:.2f}<extra></extra>'
         ))
-        st.write("📌 MLP Future Forecast:", pd.DataFrame({"Date": future_index, "Price (USD)": future_preds_mlp}))
+        st.write("MLP Future Forecast:", pd.DataFrame({"Date": future_index, "Price (USD)": future_preds_mlp}))
 
 # Layout
 fig.update_layout(
-    title='📈 Stock Prices & Predictions',
+    title='Stock Prices & Predictions',
     xaxis_title='Date',
     yaxis_title='Price (USD)',
     hovermode='x unified',
